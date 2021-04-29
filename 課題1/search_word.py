@@ -22,18 +22,18 @@ def search(file):
     source = [row['キャラクタ名'] for index, row in df.iterrows()]
     
     if word in source:
-        print("{}が見つかりした".format(word))
+        print(f"{}が見つかりした".format(word))
     else:
-        print("検索ワード{}が見つかりませんでした".format(word))
-        print("検索ワード{}を追加します。".format(word))
+        print(f"検索ワード{}が見つかりませんでした".format(word))
+        print(f"検索ワード{}を追加します。".format(word))
         # 検索ワードをSeries形式に変換
         add_word = pd.Series( [word], index=df.columns)
         # df(DataFrame )に検索ワードを追加
         df = df.append( add_word, ignore_index=True)
  
-        print("検索ワード{}を追加しました".format(word))
+        print(f"検索ワード{}を追加しました".format(word))
         # csv書き込み
-        df.to_csv(source_file,index=False,encoding='shift_jis')
+        df.to_csv(source_file,index=False,encoding='utf-8_sig')
 
 
 if __name__ == "__main__":
