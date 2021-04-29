@@ -17,7 +17,7 @@ source_file = "<ファイルパスを指定>\source.csv"
 def search(file):
     word =input("鬼滅の登場人物の名前を入力してください >>> ")
     # csvの読み込み
-    df = pd.read_csv(file, encoding='shift_jis')
+    df = pd.read_csv(file, encoding='utf-8_sig')
     # DataFrame -> リストデータに変換
     source = [row['キャラクタ名'] for index, row in df.iterrows()]
     
