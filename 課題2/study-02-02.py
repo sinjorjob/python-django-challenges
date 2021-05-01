@@ -3,35 +3,33 @@
 for文を使って、１ページ内の全ての情報を取得できるように改造してみましょう
 """
 
-
-# 検索ソース
+import os
+from selenium.webdriver import Chrome, ChromeOptions
+import time
 import pandas as pd
 import sys
 
-source_file = "<ファイルパスを指定>\source.csv"
 
-### 検索ツール
-def search(file):
-    word =input("鬼滅の登場人物の名前を入力してください >>> ")
-    # csvの読み込み
-    df = pd.read_csv(file, encoding='utf-8_sig')
-    # DataFrame -> リストデータに変換
-    source = [row['キャラクタ名'] for index, row in df.iterrows()]
+def set_driver(driver_path, headless_flg):
+    # Chromeドライバーの読み込み
+    options = ChromeOptions()
+
+    # ヘッドレスモード（画面非表示モード）をの設定
+    if headless_flg == True:
+        options.add_argument('--headless')
+
+    # 起動オプションの設定
+    options.add_argument(
+        '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36')
+    # options.add_argument('log-level=3')
+    options.add_argument('--ignore-certificate-errors')
+    options.add_argument('--ignore-ssl-errors')
+    options.add_argument('--incognito')          # シークレットモードの設定を付与
+
+    # ChromeのWebDriverオブジェクトを作成する。
+    return Chrome(executable_path=os.getcwd() + "/" + driver_path, options=options)
+
     
-    if word in source:
-        print(f"{word}が見つかりした")
-    else:
-        print(f"検索ワード{word}が見つかりませんでした")
-        print(f"検索ワード{word}を追加します。")
-        # 検索ワードをSeries形式に変換
-        add_word = pd.Series( [word], index=df.columns)
-        # df(DataFrame )に検索ワードを追加
-        df = df.append( add_word, ignore_index=True)
- 
-        print(f"検索ワード{word}を追加しました")
-        # csv書き込み
-        df.to_csv(source_file,index=False,encoding='utf-8_sig')
-
 
 def main():
     driver = set_driver("chromedriver.exe", False)
@@ -71,7 +69,8 @@ def main():
     for company, location, salary, income in zip(company_list, work_location_list, salary_list, initial_annual_income):
         print(f"会社名:{company}\n勤務地：{location}\n給与：{salary}\n初年度年収：{income}\n")
         print("="*110)
-
+    #seleniumの終了
+    driver.quit()
 
 
 if __name__ == "__main__":
