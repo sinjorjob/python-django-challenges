@@ -3,53 +3,84 @@
 <html lang="ja" >
   <head>
     <title>Eelデスクトップアプリ</title>
-
        <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
   </head>
-  <body >
-  
-
-</a>
+<body >
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
 <h1 class="text-white">Eelデスクトップアプリ</h1>
 </nav>
-
 <main role="main" class="container">
-  <div class="jumbotron">
-    <h1>簡易ワード検索機能</h1>
-   <form>
-     <div class="form-group">
-     <div class="col-7">
-       <label>検索ワード</label>
-       
+  <div class="jumbotron bg-light">
+  <h1>簡易ワード検索機能</h1>
+  <form>
+    <label>検索対象のcsvファイルを選択してください。</label><br>
+    <input type="file" id="csv-file" accept=".csv">
+    <hr>
+    <div class="form-group">
+      <div class="col-12">
+        <label>検索ワード </label>
         <input type="text" id="search" class="form-control" placeholder="ここに検索ワードを入力">
+        <label>保存先のパスを指定</label>
+        <input type="text" id="save_dir" class="form-control input-lg" placeholder="ここに保存先のパスを指定">  
+      </div>
     </div>
-    </div>
-    <input type="button" class="btn btn-lg btn-primary text-white" value="検索する" onclick="search_word()">
-     
-  </form>
-
-
- </div>
+    <input type="button" class="btn btn-primary text-white" value="検索する" onclick="search_word()">
+    </form>
+</div>
+<hr>
+<label for="result">実行結果</label>
+<div>
+  <textarea class="extarea-large" id ="result" rows="10" cols="92"></textarea>
+</div>
 </main>
 
 <script type="text/javascript" src="eel.js"></script>
 <script>
 function search_word() {
-  console.log("test");
-  let search_word = document.getElementById('search');
-    if (search_word.value == null || search_word.value == '') {
-    alert("検索文字列を入力してください。");
-}
-}
+   let file_path = document.getElementById('csv-file').value;
+   let search_word = document.getElementById('search').value;
+   let save_dir = document.getElementById('save_dir').value;
+   if (search_word == null || search_word == '') {
+    swal({
+            title: '検索文字列が入力されていません。',
+            text: '検索単語を1つ入力してください。',
+            icon: 'error',
+            button: 'OK'});
+    }else if (file_path ==''){
+    swal({
+            title: 'ファイルが選択されていません。',
+            text: '検索対象のCSVファイルを指定してください。',
+            icon: 'error',
+            button: 'OK'});
+    }else{
+        async function run() {
+        let result = await eel.serach_word(search_word, file_path,save_dir)();
+        /*処理結果タイプによってメッセージ種別を切り替える*/
+        if (result.type == "error"){
+        swal({
+            title: 'エラーが発生しました。',
+            text: result.message,
+            icon: 'error',
+            button: 'OK'});
+        }else{
+        let textarea = document.getElementById('result');
+        /* textareaにメッセージを表示*/
+        textarea.insertAdjacentHTML('beforeend', result.message);
+        }  /* end if */
+       }  /* end async function */
+    run();
+    }  /* end else */
+}  /* end search_word() */
 </script>
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-  </body>
+<!-- sweetalertでアラートメッセージを装飾 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+</body>
 </html>
