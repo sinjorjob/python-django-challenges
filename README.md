@@ -17,3 +17,4 @@ python django challenges
 
 ### デモ
 
+![Eelアプリ](https://github.com/sinjorjob/python-django-challenges/blob/master/study-03-desktop-01.gif)
