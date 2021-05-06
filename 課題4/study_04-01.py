@@ -23,6 +23,7 @@ class Order:
             for item in self.item_master:    #商品情報が格納されているitem_masterから1つずつ商品クラス情報を取り出し
                 if order == item.item_code:    #オーダーされた商品コードと同じ商品コードのクラスかどうかをチェックし
                     print(f"商品コード{order}, 商品名：{item.item_name}, 価格：{item.price}")   #一致していたらその商品の名前、価格を表示
+                    break
     
    
     
