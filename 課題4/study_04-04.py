@@ -21,7 +21,7 @@ class Order:
         self.item_master=item_master   # item_masterにはItemクラスがリスト形式で格納される。
     
     def add_item_order(self,item_code, order_count):
-        #注文数分オーダーを追加
+        #商品コードと注文数を保持
         self.item_order_list.append(item_code)
         self.item_count_list.append(order_count)
         
