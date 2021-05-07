@@ -90,8 +90,11 @@ def main():
         print("商品コードが存在しません。\n存在する商品コードを入力してください。")
         exit()
     order_count = input("商品の注文数を入力してください。>>>")
-    #注文数のチェック(整数かどうか判定)
+    #注文数のチェック(1以上の整数かどうか判定)
     if not is_only_num(order_count, r'([0-9]+)'):
+        print("注文数は整数値を入力してください。")
+        exit()
+    elif not int(order_count) >= 1:
         print("注文数は1以上の整数値を入力してください。")
         exit()
         
