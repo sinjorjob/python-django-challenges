@@ -37,7 +37,7 @@ def is_only_num(input):
     
 
 #商品マスターに存在する商品コードかどうかをチェックする関数
-def is_valid(item_code, item_master):
+def is_item_code_valid(item_code, item_master):
     decision_flag  = False
     for item in item_master:  #商品マスターに入力した商品コードが存在するかチェック
         if item_code == item.item_code:
@@ -60,7 +60,7 @@ def main():
         print("3桁数字の商品コードを入力してください。")
         exit()
     #商品コードの存在チェック
-    if not is_valid(order_number, item_master):
+    if not is_item_code_valid(order_number, item_master):
         print("商品コードが存在しません。\n存在する商品コードを入力してください。")
         exit()
     
