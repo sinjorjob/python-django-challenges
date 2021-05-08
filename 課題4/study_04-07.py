@@ -11,9 +11,9 @@ RECEIPT_FOLDER = "./receipt"
 ### 商品クラス
 class Item:
     def __init__(self,item_code,item_name,price):
-        self.item_code=item_code
-        self.item_name=item_name
-        self.price=price
+        self.item_code=item_code   #商品コード
+        self.item_name=item_name   #商品名
+        self.price=price           #商品の値段
     
     def get_price(self):
         return self.price
@@ -39,8 +39,8 @@ class Order:
             for item in self.item_master:    #商品情報が格納されているitem_masterから1つずつ商品クラス情報を取り出し
                 if order == item.item_code:    #オーダーされた商品コードと同じ商品コードのクラスかどうかをチェックし
                     #オーダーの合計金額を計算
-                    self.total_item_amount = int(item.price) * int(count)
-                    self.total_all_items_amount += int(item.price) * int(count)
+                    self.total_item_amount = int(item.price) * int(count)   #商品全体の合計金額
+                    self.total_all_items_amount += int(item.price) * int(count)   #商品毎の合計金額
                     print(f"商品名：{item.item_name}, 価格：{item.price}, 注文数：{count},合計金額：{self.total_item_amount}円") #一致していたらその商品の名前、価格を表示
                     self.write_receipt(f"商品名：{item.item_name}, 価格：{item.price}, 注文数：{count},合計金額：{self.total_item_amount}円")
                     break
@@ -94,6 +94,10 @@ class Order:
                 print("お金が不足しています。\n再度金額を入力してください。")
     
     def write_receipt(self,text):
+        """
+        注文結果をログに出力
+        ファイル名:receipt_yyyymmdd.log
+        """
         now = datetime.datetime.now()
         receipt_file = os.path.join(RECEIPT_FOLDER, 'receipt_' + now.strftime('%Y%m%d') + '.log')        
         with open(receipt_file, mode="a",encoding="utf-8_sig") as f:  #末尾に追記
@@ -140,12 +144,12 @@ def add_item_master(csv_path):
 
 ### メイン処理
 def main():
-    # マスタ登録
-    item_master = add_item_master(CSV_PATH)
-    order=Order(item_master) #マスタをオーダーに登録
-    order.input_order(order, item_master)
-    order.view_item_list()   #注文情報を表示
-    order.input_deposit_and_change_calc()  #預り金とおつりを表示
+    
+    item_master = add_item_master(CSV_PATH) #csvから商品マスタを登録
+    order=Order(item_master) #商品マスタを元にオーダーインスタンスを生成
+    order.input_order(order, item_master)  #注文の受付
+    order.view_item_list()   #注文の合計金額計算
+    order.input_deposit_and_change_calc()  #預り金とおつりを計算
 
 
 if __name__ == "__main__":
