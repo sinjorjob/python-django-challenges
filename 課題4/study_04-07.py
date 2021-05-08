@@ -39,8 +39,8 @@ class Order:
             for item in self.item_master:    #商品情報が格納されているitem_masterから1つずつ商品クラス情報を取り出し
                 if order == item.item_code:    #オーダーされた商品コードと同じ商品コードのクラスかどうかをチェックし
                     #オーダーの合計金額を計算
-                    self.total_item_amount = int(item.price) * int(count)   #商品全体の合計金額
-                    self.total_all_items_amount += int(item.price) * int(count)   #商品毎の合計金額
+                    self.total_item_amount = int(item.price) * int(count)   #商品毎の合計金額
+                    self.total_all_items_amount += int(item.price) * int(count)   #全商品の合計金額
                     print(f"商品名：{item.item_name}, 価格：{item.price}, 注文数：{count},合計金額：{self.total_item_amount}円") #一致していたらその商品の名前、価格を表示
                     self.write_receipt(f"商品名：{item.item_name}, 価格：{item.price}, 注文数：{count},合計金額：{self.total_item_amount}円")
                     break
