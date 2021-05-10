@@ -69,6 +69,10 @@ class Order:
                 print("注文数は整数値を入力してください。")
                 continue
             
+            elif not int(order_count) >= 1:
+                print("注文数は1以上の整数値を入力してください。")
+                exit()
+            
             order.add_item_order(order_number, order_count)    #注文情報をオーダーに追加
             continue_input = input("引き続き注文する場合は「1」を、注文を終了する場合は「2」を入力してください。 ")
             if continue_input == "1":
