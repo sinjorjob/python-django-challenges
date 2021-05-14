@@ -2,7 +2,7 @@
 python django challenges
 
 タイプ
-## 課題3の仕様
+## 課題3
 
 ### 画面仕様
 
@@ -18,3 +18,31 @@ python django challenges
 ### デモ
 
 ![Eelアプリ](https://github.com/sinjorjob/python-django-challenges/blob/master/study-03-desktop-01.gif)
+
+
+## 課題5
+
+商品注文の簡易POSアプリ
+
+※商品マスター情報はcsv\item_master.csv）を自動的にロードする形とする。
+
+
+### 画面、機能仕様
+
+以下の2つのメニューがある。
+
+・**「商品追加はこちら」**  
+　※商品コードと数量を入力し「オーダーリストに追加する」ボタンを押すと、画面中央の「注文リスト」に追加される。  
+  ※「注文をリセット」ボタンを押すと注文リストに追加された情報を削除できる。  
+  ※「注文リスト」に商品を追加すると左下欄に合計金額が表示される。
+  ※入力フォーム欄にはitem_master.csvに登録されている商品情報が一覧表示される仕様としている。
+
+
+・**「お会計はこちら」**  
+　注文リストに商品を追加した後に「お会計はこちら」メニューをクリックすると会計画面が表示される。  
+合計金額が表示されるので、金額を確認の上、支払金額を入力後に「購入する」ボタンを押すとおつりが計算されて購入処理が完了する。
+
+
+### デモ
+
+![Eelアプリ](https://github.com/sinjorjob/python-django-challenges/blob/master/study-05-desktop-01.gif)
